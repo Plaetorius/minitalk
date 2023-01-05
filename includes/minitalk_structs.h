@@ -6,10 +6,12 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:50:43 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/03 17:51:55 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/05 16:18:25 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK__STRUCTS_H
-# define MINITALK__STRUCTS_H
+#ifndef MINITALK_STRUCTS_H
+# define MINITALK_STRUCTS_H
+
 #endif
+
