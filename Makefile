@@ -6,7 +6,7 @@
 #    By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 17:23:52 by tgernez           #+#    #+#              #
-#    Updated: 2023/01/05 17:40:45 by tgernez          ###   ########.fr        #
+#    Updated: 2023/01/07 17:50:57 by tgernez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ safe:
 
 clean:
 	@echo "${CYAN}Cleaned Minitalk${NC}"
-	@${RM} ${OBJS}
+	@${RM} ${CLIENT_OBJS} ${SERVER_OBJS}
 
 fclean:		clean
 	@echo "${CYAN}FCleaned Minitalk${NC}"
