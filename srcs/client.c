@@ -6,7 +6,7 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:03 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/07 18:49:33 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/07 18:52:24 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ pid_t	get_pid(char *str)
 	pid = 0;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (!(str[i] >= '0' && str[i] <= '9'))
 			return (-1);
 		pid = pid * 10 + (str[i] - '0');
 		i++;
