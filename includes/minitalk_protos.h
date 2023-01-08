@@ -6,10 +6,12 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:50:34 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/03 17:51:45 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/08 18:48:28 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_PROTOS_H
 # define MINITALK_PROTOS_H
+# include "signal.h"
+pid_t	get_pid(char *str);
 #endif
