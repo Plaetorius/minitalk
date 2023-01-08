@@ -6,22 +6,23 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:10 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/07 18:33:50 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/08 17:19:41 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static volatile int client_pid = -1;
-
 static void signal_reception(int sig, siginfo_t *info, void *context)
 {
 	static unsigned char buff = 0;
 	static int	factor = 128;
+	int	client_pid;
 
 	(void)context;
 	client_pid = info->si_pid;
-	kill(client_pid, SIGUSR1);
+	// ft_printf("Client Pid=%d\n", client_pid);
+	if (kill(client_pid, SIGUSR1) == -1)
+		return ;
 	buff += (sig == SIGUSR2) * factor;
 	factor /= 2;
 	ft_printf("%d\n", factor);
@@ -32,6 +33,7 @@ static void signal_reception(int sig, siginfo_t *info, void *context)
 		factor = 128;
 		buff = 0;
 	}
+	// ft_printf("Proccess locked\n");
 }
 
 int main()

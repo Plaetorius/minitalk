@@ -6,7 +6,7 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:03 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/07 18:52:24 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/08 17:20:40 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	is_message_received(int sig, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	message_received = sig == SIGUSR1;
+	ft_printf("Arrived in good call\n");
 }
 
 static unsigned char *buff_filler(unsigned char c)
@@ -63,11 +64,12 @@ static int send_buff(unsigned char *buff, pid_t pid)
 			sent = kill(pid, SIGUSR1);
 		else if (buff[i] == 1)
 			sent = kill(pid, SIGUSR2);
-		usleep(50);
-		while (!message_received)
-			pause();
-		if (sent != -1)
+		usleep(100);
+		if (sent != -1 && message_received)
+		{
 			i++;
+			message_received = 0;
+		}
 	}
 	return (1);
 }
@@ -124,6 +126,7 @@ int main(int ac, char **av)
 	sa.sa_sigaction =  &is_message_received;
 	if (ac != 3)
 		return (ft_printf("Problem in arguments\n"), 1);
+	ft_printf("Own Pid= %d\n", getpid());
 	server_pid = get_pid(av[1]);
 	if (server_pid <= 0)
 		return (ft_printf("%d is an incorrect PID\n", server_pid), 1);
