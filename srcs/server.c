@@ -6,7 +6,7 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:10 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/09 17:11:49 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:21:25 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static unsigned char	*add_char(unsigned char *message, unsigned char c)
 	int	i;
 	static int len = 1;
 
+	tmp = NULL;	
 	i = 0;
 	tmp = malloc(++len);
 	if (!tmp)
@@ -31,6 +32,8 @@ static unsigned char	*add_char(unsigned char *message, unsigned char c)
 	tmp[i + 1] = '\0';
 	if (len > 2)
 		free(message);
+	if (c == '\0')
+		len = 1;
 	return (tmp);
 }
 
@@ -45,7 +48,6 @@ static void signal_reception(int sig, siginfo_t *info, void *context)
 	(void)context;
 	client_pid = info->si_pid;
 	buff += (sig == SIGUSR2) * factor;
-	// ft_printf("%d->%d\t", factor, (sig == SIGUSR2));
 	factor /= 2;
 	if (factor == 0)
 	{
@@ -55,15 +57,15 @@ static void signal_reception(int sig, siginfo_t *info, void *context)
 			ft_printf("Failing for empty message\n");
 			return ;
 		}
-		// ft_printf("\n");
 		if (factor == 0 && buff == 0)
+		{
 			ft_printf("%s\n", message);
+		}
 		factor = 128;
 		buff = 0;
 	}
 	if (kill(client_pid, SIGUSR1) == -1)
 		ft_printf("Failed Sending Signal Acknoledgement\n");
-	// ft_printf("%s", message);
 }
 
 int main(int ac, char **av)
