@@ -6,7 +6,7 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:03 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/08 18:49:40 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/09 17:06:47 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	transmitter(char *message, pid_t pid)
 	len = 0;
 	while (message[len])
 		len++;
-	while (i < len)
+	while (i < len + 1)
 	{
 		buff = buff_filler(message[i]);
 		if (!buff)
@@ -115,12 +115,11 @@ int main(int ac, char **av)
 	if (server_pid <= 0)
 		return (ft_printf("%d is an incorrect PID\n", server_pid), 1);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_sigaction =  &is_message_received;
+	sa.sa_sigaction = &is_message_received;
 	if (sigemptyset(&sa.sa_mask) != 0)
 		return (ft_printf("Problem with initialisation\n"), 1);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 		return (ft_printf("Problem with sigaction\n"), 1);
-	ft_printf("SERVER PID=%d\n", server_pid);
 	transmitter(av[2], server_pid);
 	return (0);
 }
