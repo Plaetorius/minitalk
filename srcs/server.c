@@ -6,19 +6,31 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:10 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/09 17:21:25 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:06:23 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static void	render_message(unsigned char *message)
+{
+	int	len;
+
+	len = 0;
+	while (message[len])
+		len++;
+	write(1, message, len);
+	write(1, "\n", 1);
+	free(message);
+}
+
 static unsigned char	*add_char(unsigned char *message, unsigned char c)
 {
-	unsigned char *tmp;
-	int	i;
-	static int len = 1;
+	unsigned char	*tmp;
+	int				i;
+	static int		len = 1;
 
-	tmp = NULL;	
+	tmp = NULL;
 	i = 0;
 	tmp = malloc(++len);
 	if (!tmp)
@@ -37,8 +49,7 @@ static unsigned char	*add_char(unsigned char *message, unsigned char c)
 	return (tmp);
 }
 
-
-static void signal_reception(int sig, siginfo_t *info, void *context)
+static void	signal_reception(int sig, siginfo_t *info, void *context)
 {
 	static unsigned char	buff = 0;
 	static unsigned char	factor = 128;
@@ -58,9 +69,7 @@ static void signal_reception(int sig, siginfo_t *info, void *context)
 			return ;
 		}
 		if (factor == 0 && buff == 0)
-		{
-			ft_printf("%s\n", message);
-		}
+			render_message(message);
 		factor = 128;
 		buff = 0;
 	}
@@ -68,10 +77,10 @@ static void signal_reception(int sig, siginfo_t *info, void *context)
 		ft_printf("Failed Sending Signal Acknoledgement\n");
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	struct sigaction	sa;
-	pid_t	pid;
+	pid_t				pid;
 
 	(void)av;
 	pid = getpid();
@@ -82,7 +91,7 @@ int main(int ac, char **av)
 	if (sigemptyset(&sa.sa_mask) != 0)
 		return (ft_printf("Problem with initialisation\n"), EXIT_FAILURE);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-		return (ft_printf("Couldn't handle SIGUSR1 properly\n"),EXIT_FAILURE);
+		return (ft_printf("Couldn't handle SIGUSR1 properly\n"), EXIT_FAILURE);
 	if (sigaction(SIGUSR2, &sa, NULL) == -1)
 		return (ft_printf("Couldn't handle SIGUSR2 properly\n"), EXIT_FAILURE);
 	ft_printf("SERVER PID= %d\n", pid);

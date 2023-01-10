@@ -6,10 +6,11 @@
 #    By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 17:23:52 by tgernez           #+#    #+#              #
-#    Updated: 2023/01/07 17:50:57 by tgernez          ###   ########.fr        #
+#    Updated: 2023/01/10 16:53:01 by tgernez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME			= minitalk
 CLIENT			= client
 SERVER			= server
 INCLUDES		= -Iincludes
@@ -35,6 +36,9 @@ CYAN			= \033[1;36m
 
 all: ${CLIENT} ${SERVER}
 	@echo "${LGREEN}Successfully created${NC}${CYAN} ${CLIENT} & ${SERVER} ${NC}${LGREEN}!${NC}"
+
+${NAME}: all
+
 
 ${CLIENT}: ${CLIENT_OBJS} ${PRINTFDIR}/libft_printf.a
 	@${CC} ${CLIENT_OBJS} ${INCLUDES} -L${PRINTFDIR} ${PRINTFLIB} -o $@
