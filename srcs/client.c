@@ -6,7 +6,7 @@
 /*   By: tgernez <tgernez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:47:03 by tgernez           #+#    #+#             */
-/*   Updated: 2023/01/10 17:11:29 by tgernez          ###   ########.fr       */
+/*   Updated: 2023/01/12 16:11:32 by tgernez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int ac, char **av)
 	if (ac != 3)
 		return (ft_printf("Problem in arguments\n"), 1);
 	server_pid = get_pid(av[1]);
-	if (server_pid <= 0)
+	if (server_pid <= 0 || server_pid > 4194304)
 		return (ft_printf("%d is an incorrect PID\n", server_pid), 1);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_sigaction = &is_message_received;
